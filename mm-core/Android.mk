@@ -24,7 +24,7 @@ else
 OMXCORE_CFLAGS += -D_DEFAULT_
 endif
 
-ifeq ($(call is-platform-sdk-version-at-least,27),true) # O-MR1
+ifdef IS_AT_LEAST_OPM1 # O-MR1
 OMXCORE_CFLAGS += -D_ANDROID_O_MR1_DIVX_CHANGES
 endif
 
@@ -76,10 +76,13 @@ LOCAL_EXPORT_HEADER_LIBRARY_HEADERS := libomxcore_headers
 
 LOCAL_PRELINK_MODULE    := false
 LOCAL_MODULE            := libOmxCore
+LOCAL_LICENSE_KINDS     := SPDX-license-identifier-BSD SPDX-license-identifier-MIT
+LOCAL_LICENSE_CONDITIONS := notice
+LOCAL_NOTICE_FILE       := $(LOCAL_PATH)/../LICENSE
 LOCAL_MODULE_TAGS       := optional
 LOCAL_VENDOR_MODULE     := true
 LOCAL_SHARED_LIBRARIES  := liblog libdl libcutils
-ifeq ($(call is-board-platform-in-list, $(MSM_VIDC_TARGET_LIST)),true)
+ifneq (,$(call is-board-platform-in-list2, $(MSM_VIDC_TARGET_LIST)))
 LOCAL_SHARED_LIBRARIES  += libplatformconfig
 endif
 LOCAL_CFLAGS            := $(OMXCORE_CFLAGS)
@@ -111,10 +114,13 @@ LOCAL_EXPORT_HEADER_LIBRARY_HEADERS := libomxcore_headers
 
 LOCAL_PRELINK_MODULE    := false
 LOCAL_MODULE            := libmm-omxcore
+LOCAL_LICENSE_KINDS     := SPDX-license-identifier-BSD SPDX-license-identifier-MIT
+LOCAL_LICENSE_CONDITIONS := notice
+LOCAL_NOTICE_FILE       := $(LOCAL_PATH)/../LICENSE
 LOCAL_MODULE_TAGS       := optional
 LOCAL_VENDOR_MODULE     := true
 LOCAL_SHARED_LIBRARIES  := liblog libdl libcutils
-ifeq ($(call is-board-platform-in-list, $(MSM_VIDC_TARGET_LIST)),true)
+ifneq (,$(call is-board-platform-in-list2, $(MSM_VIDC_TARGET_LIST)))
 LOCAL_SHARED_LIBRARIES  += libplatformconfig
 endif
 LOCAL_CFLAGS            := $(OMXCORE_CFLAGS)
@@ -132,6 +138,9 @@ include $(BUILD_SHARED_LIBRARY)
 include $(CLEAR_VARS)
 
 LOCAL_MODULE := libomxcore_headers
+LOCAL_LICENSE_KINDS := SPDX-license-identifier-BSD SPDX-license-identifier-MIT
+LOCAL_LICENSE_CONDITIONS := notice
+LOCAL_NOTICE_FILE := $(LOCAL_PATH)/../LICENSE
 LOCAL_EXPORT_C_INCLUDE_DIRS := $(LOCAL_PATH)/inc
 LOCAL_VENDOR_MODULE := true
 
